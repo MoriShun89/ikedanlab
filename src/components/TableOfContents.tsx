@@ -50,7 +50,7 @@ export function TableOfContents({ html }: Props) {
 
   return (
     <nav className="toc" aria-label="目次">
-      <p className="toc__title">目次</p>
+      <p className="toc__title">INDEX</p>
       <ol className="toc__list">
         {headings.map((h) => (
           <li

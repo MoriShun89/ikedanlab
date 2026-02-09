@@ -16,6 +16,8 @@ import {
 } from "@/components/TableOfContents";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { AuthorBox } from "@/components/AuthorBox";
+import { ArticleLeadBox } from "@/components/ArticleLeadBox";
+import { StickyCta } from "@/components/StickyCta";
 import { formatDate, estimateReadTime } from "@/lib/utils";
 
 export const revalidate = 60;
@@ -154,6 +156,12 @@ export default async function ArticlePage({ params }: Props) {
           />
         )}
 
+        {/* Lead Box */}
+        <ArticleLeadBox
+          html={article.body}
+          readTime={estimateReadTime(article.body)}
+        />
+
         {/* Table of Contents */}
         <TableOfContents html={article.body} />
 
@@ -178,6 +186,11 @@ export default async function ArticlePage({ params }: Props) {
         {/* Author */}
         <AuthorBox />
       </article>
+
+      {/* Mobile Sticky CTA */}
+      {article.affiliateLinks && article.affiliateLinks.length > 0 && (
+        <StickyCta link={article.affiliateLinks[0]} />
+      )}
 
       {/* Related Articles */}
       {filteredRelated.length > 0 && (

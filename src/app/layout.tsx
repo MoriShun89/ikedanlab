@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Noto_Sans_JP, Zen_Kaku_Gothic_New, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -19,6 +19,13 @@ const zenKaku = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
   weight: ["500", "700"],
   variable: "--font-zen-kaku",
+  display: "swap",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
@@ -61,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} ${zenKaku.variable}`}>
+    <html lang="ja" className={`${notoSansJP.variable} ${zenKaku.variable} ${jetBrainsMono.variable}`}>
       <body>
         <GoogleAnalytics />
         <Header />

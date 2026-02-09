@@ -7,6 +7,18 @@ type Props = {
   featured?: boolean;
 };
 
+const CATEGORY_MODIFIERS: Record<string, string> = {
+  skincare: "article-card__category--skincare",
+  epilation: "article-card__category--epilation",
+  aga: "article-card__category--aga",
+  wellness: "article-card__category--wellness",
+};
+
+function isNew(publishedAt: string): boolean {
+  const diff = Date.now() - new Date(publishedAt).getTime();
+  return diff <= 7 * 24 * 60 * 60 * 1000;
+}
+
 export function ArticleCard({ article, featured }: Props) {
   const excerpt =
     article.description.length > 60
@@ -16,6 +28,8 @@ export function ArticleCard({ article, featured }: Props) {
   const cardClass = featured
     ? "article-card article-card--featured"
     : "article-card";
+
+  const readTime = article.body ? estimateReadTime(article.body) : null;
 
   return (
     <Link href={`/articles/${article.slug}`} className={cardClass}>
@@ -32,12 +46,23 @@ export function ArticleCard({ article, featured }: Props) {
           <div className="article-card__placeholder" />
         )}
         <div className="article-card__thumbnail-overlay" />
+        {readTime && (
+          <span className="article-card__readtime-badge">
+            {readTime}min
+          </span>
+        )}
+        {isNew(article.publishedAt) && (
+          <span className="article-card__new-badge">NEW</span>
+        )}
       </div>
       <div className="article-card__body">
         {article.categories && article.categories.length > 0 && (
           <div className="article-card__categories">
             {article.categories.map((cat) => (
-              <span key={cat.id} className="article-card__category">
+              <span
+                key={cat.id}
+                className={`article-card__category ${CATEGORY_MODIFIERS[cat.id] ?? ""}`}
+              >
                 {cat.name}
               </span>
             ))}
@@ -53,9 +78,6 @@ export function ArticleCard({ article, featured }: Props) {
           <time dateTime={article.publishedAt}>
             {formatDate(article.publishedAt)}
           </time>
-          {article.body && (
-            <span>{estimateReadTime(article.body)}分で読める</span>
-          )}
         </div>
       </div>
     </Link>

@@ -23,6 +23,9 @@ export function AffiliateBox({ link }: Props) {
         {link.buttonText || "公式サイトで詳しく見る"}
         <span className="affiliate-box__arrow" aria-hidden="true">→</span>
       </a>
+      <p className="affiliate-box__microcopy">
+        公式サイトに移動します（その場で登録・課金は発生しません）
+      </p>
       <p className="affiliate-box__note">PR（提携リンクを含みます）</p>
     </div>
   );
