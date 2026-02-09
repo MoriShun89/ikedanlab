@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { PrDisclosure } from "@/components/PrDisclosure";
 import { CookieNotice } from "@/components/CookieNotice";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function RootLayout({
         <PrDisclosure />
         <main>{children}</main>
         <Footer />
+        <ScrollToTop />
         <CookieNotice />
       </body>
     </html>

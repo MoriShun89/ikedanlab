@@ -4,28 +4,34 @@ import { formatDate, estimateReadTime } from "@/lib/utils";
 
 type Props = {
   article: Article;
+  featured?: boolean;
 };
 
-export function ArticleCard({ article }: Props) {
+export function ArticleCard({ article, featured }: Props) {
   const excerpt =
     article.description.length > 60
       ? article.description.slice(0, 60) + "..."
       : article.description;
 
+  const cardClass = featured
+    ? "article-card article-card--featured"
+    : "article-card";
+
   return (
-    <Link href={`/articles/${article.slug}`} className="article-card">
+    <Link href={`/articles/${article.slug}`} className={cardClass}>
       <div className="article-card__thumbnail">
         {article.thumbnail ? (
           <img
-            src={`${article.thumbnail.url}?w=640&h=360&fit=crop`}
+            src={`${article.thumbnail.url}?w=${featured ? "800" : "640"}&h=${featured ? "450" : "360"}&fit=crop`}
             alt={article.title}
-            width={640}
-            height={360}
-            loading="lazy"
+            width={featured ? 800 : 640}
+            height={featured ? 450 : 360}
+            loading={featured ? undefined : "lazy"}
           />
         ) : (
           <div className="article-card__placeholder" />
         )}
+        <div className="article-card__thumbnail-overlay" />
       </div>
       <div className="article-card__body">
         {article.categories && article.categories.length > 0 && (
@@ -39,7 +45,9 @@ export function ArticleCard({ article }: Props) {
         )}
         <h2 className="article-card__title">{article.title}</h2>
         {article.description && (
-          <p className="article-card__excerpt">{excerpt}</p>
+          <p className="article-card__excerpt">
+            {featured ? article.description : excerpt}
+          </p>
         )}
         <div className="article-card__meta">
           <time dateTime={article.publishedAt}>

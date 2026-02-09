@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getArticles } from "@/lib/microcms";
+import { getArticles, CATEGORIES } from "@/lib/microcms";
 import { ArticleCard } from "@/components/ArticleCard";
 
 // ISR: 60秒ごとに再検証
@@ -21,23 +21,43 @@ export default async function HomePage() {
           <p className="hero__subtitle">
             身体の内側から外側まで、男を磨くための情報をお届けします
           </p>
+          <nav className="hero__categories">
+            {CATEGORIES.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/articles?category=${cat.id}`}
+                className="hero__category-link"
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </nav>
         </div>
       </section>
 
       {/* Latest Articles */}
       <div className="container container--wide">
-        <h2 className="section-heading">最新の記事</h2>
+        <h2 className="section-heading">
+          <span className="section-heading__sub">Latest</span>
+          最新の記事
+        </h2>
 
         {articles.length === 0 ? (
           <p className="empty-state">
             まだ記事がありません。microCMS から記事を投稿してください。
           </p>
         ) : (
-          <div className="articles-grid">
-            {articles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </div>
+          <>
+            {/* Feature card — first article */}
+            <ArticleCard article={articles[0]} featured />
+            {articles.length > 1 && (
+              <div className="articles-grid">
+                {articles.slice(1).map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {articles.length > 0 && (

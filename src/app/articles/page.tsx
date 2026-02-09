@@ -44,7 +44,7 @@ export default async function ArticlesPage({ searchParams }: Props) {
   return (
     <>
       {/* Page Header */}
-      <div className="container">
+      <div className="container container--wide">
         <header className="category-header">
           <h1 className="category-header__title">
             {activeCat ? activeCat.name : "記事一覧"}

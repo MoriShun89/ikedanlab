@@ -183,7 +183,10 @@ export default async function ArticlePage({ params }: Props) {
       {filteredRelated.length > 0 && (
         <section className="related-section">
           <div className="container container--wide">
-            <h2 className="related-section__title">関連記事</h2>
+            <h2 className="related-section__title">
+              <span className="section-heading__sub">Related</span>
+              関連記事
+            </h2>
             <div className="articles-grid">
               {filteredRelated.map((a) => (
                 <ArticleCard key={a.id} article={a} />
